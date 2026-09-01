@@ -1,0 +1,185 @@
+<!DOCTYPE HTML>
+<html>
+  
+<head>
+    <title>⚙ Genera tu contraseña segura ⚙</title>
+	
+	
+	<style>
+	
+	body{
+	background-color: #3E4452;
+	COLOR: white;
+}
+	
+	
+#container{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+}	
+	
+h3 {
+	font-size: 4vw;
+	height: 50px;
+	margin-bottom: 3.5vw;
+	text-aling: center;
+}	
+
+
+.fa {
+	font-size: 3vw;
+	color: #B1B2CF;
+	margin: auto;
+	margin-top: 30px;
+}
+
+.fa:hover {
+	color: #686ffd;
+	transition: all 0.4s;
+}
+
+.fa, button {
+	cursor: pointer;
+}
+
+button {
+	font-size: 3vw;
+	background-color: #686ffd;
+	border: 0;
+	padding: 1vw 3vw;
+	border-radius: 25px;
+	color: white;
+	box-shadow: 0 1px 1px rgba(0, 0, 0.12), 0 2px 2px rgba(0, 0, 0.12), 0 4px 4px rgba(0, 0, 0.12), 0 8px 8px rgba(0, 0, 0.12), 0 16px 16px rgba(0, 0, 0.12);
+}
+
+button:hover {
+	opacity: 0.8;
+	transition: all 0.4s;
+}
+	</style>
+	
+	<script type="Text/JavaScript">
+	   function mostrartexto() {
+		document.getElementById("par1").innerHTML ="Pincha aquí para crear tu contraseña segura";
+			      alert("Contraseña copiada con éxito");
+		document
+    }
+	
+	</script>
+	
+</head>
+  
+<body>
+      
+
+<div id="container" class="container-fluid">  
+
+
+	    
+    <button id=par1 onclick="gfg_Run()">Pincha aquí para crear tu contraseña segura</button>
+	
+    <br>	
+    <br>
+    <br>      
+    <div id="textoACopiar">
+        <p id="geeks" class="fa"></p>
+    </div>
+	<br>
+	<br>
+	<br>
+        <button id="btnCopiar" class="btn btn-primary" onClick="mostrartexto()">COPIAR a portapapeles</button>
+		        <div id="alerta" class="alert invisible"></div>
+				<br>
+				<br>
+	    <button id="descargar">Descargar TXT</button>			
+</div>
+      
+    <script>
+        var el_down = document.getElementById("geeks");
+  
+        /* Function to generate combination of password */
+        function generateP() {
+            var pass = '';
+            var str = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789,;:!?.'
+              
+            for (i = 1; i <= 10; i++) {
+                var char = Math.floor(Math.random()
+                            * str.length + 1);
+                  
+                pass += str.charAt(char)
+            }
+              
+            return pass;
+        }
+  
+        function gfg_Run() {
+				document.getElementById("par1").innerHTML ="Prueba de nuevo";
+            el_down.innerHTML = generateP();
+        }
+    </script>
+	
+	<script>
+    //Asigno el evento "click" del botón para provoar el copiado
+    document.getElementById('btnCopiar').addEventListener('click', copiarAlPortapapeles);
+
+    //Función que lanza el copiado del código
+    function copiarAlPortapapeles(ev){
+        var codigoACopiar = document.getElementById('textoACopiar');    //Elemento a copiar
+        //Debe estar seleccionado en la página para que surta efecto, así que...
+        var seleccion = document.createRange(); //Creo una nueva selección vacía
+        seleccion.selectNodeContents(codigoACopiar);    //incluyo el nodo en la selección
+        //Antes de añadir el intervalo de selección a la selección actual, elimino otros que pudieran existir (sino no funciona en Edge)
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(seleccion);  //Y la añado a lo seleccionado actualmente
+        try {
+            var res = document.execCommand('copy'); //Intento el copiado
+            if (res)
+                exito();
+            else
+                fracaso();
+
+            mostrarAlerta();
+        }
+        catch(ex) {
+            excepcion();
+        }
+        window.getSelection().removeRange(seleccion);
+    }
+
+    //Detectar pegado (se puede hacer para toda la página interceptándolo en el documento o solo en elementos concretos, como es el caso)
+    document.getElementById('ParaPegar').addEventListener('paste', interceptarPegado);
+
+    function interceptarPegado(ev) {
+        alert('Has pegado el texto:' + ev.clipboardData.getData('text/plain'));
+    }
+</script>
+
+<script>
+function copiar(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
+// Start file download.
+document.getElementById('descargar').addEventListener('click', function() {
+  // Generate download of .txt file with some content
+  var text = document.querySelector('#geeks');
+  var filename = 'tu_contraseña.txt';
+
+  copiar(filename, text.textContent);
+});
+</script>
+</body>
+  
+</html>
